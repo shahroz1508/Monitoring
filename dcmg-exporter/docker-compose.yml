@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  dcgm-exporter:
+    image: nvcr.io/nvidia/k8s/dcgm-exporter:2.1.4-2.3.1-ubuntu20.04
+    container_name: dcgm-exporter
+    restart: unless-stopped
+    command: 
+      - "-f"
+      - "/etc/dcgm-exporter/dcp-metrics-included.csv"
+    network_mode: "host"
+    cap_add:
+      - SYS_ADMIN
+    volumes:
+      - /etc/dcgm-exporter/dcp-metrics-included.csv:/etc/dcgm-exporter/dcp-metrics-included.csv:ro
+    runtime: nvidia
